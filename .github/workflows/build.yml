@@ -18,7 +18,18 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build with Gradle
+    - name: Grant execute permission for gradlew
       run: |
-        # Skrip otomatis build APK debug via Gradle
-        echo "Building APK..."
+        # Jika belum ada gradlew wrapper, kita buat struktur gradle command
+        gradle wrapper
+
+    - name: Build Debug APK with Gradle
+      run: |
+        chmod +x gradlew
+        ./gradlew assembleDebug
+
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ASI-Batulayar-APK
+        path: app/build/outputs/apk/debug/app-debug.apk
