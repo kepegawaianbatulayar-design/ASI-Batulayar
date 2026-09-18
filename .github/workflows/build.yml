@@ -18,15 +18,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Grant execute permission for gradlew
-      run: |
-        # Jika belum ada gradlew wrapper, kita buat struktur gradle command
-        gradle wrapper
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
 
-    - name: Build Debug APK with Gradle
-      run: |
-        chmod +x gradlew
-        ./gradlew assembleDebug
+    - name: Build Debug APK
+      run: gradle assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v3
